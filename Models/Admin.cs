@@ -37,8 +37,6 @@ namespace FestivalHue.Models
         [Required]
         public int RoleId { get; set; }
 
-        public virtual Role Role { get; set; }
-
         [MaxLength(50)]
         [Required]
         public DateTime Created_at { get; set; } = DateTime.Now;
@@ -47,7 +45,11 @@ namespace FestivalHue.Models
         [Required]
         public DateTime Updated_at { get; set; } = DateTime.Now;
 
+        [ForeignKey("RoleId")]
+        public virtual Role Role { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Checkin> Checkins { get; set; }
+
 
 
 

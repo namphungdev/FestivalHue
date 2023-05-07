@@ -5,42 +5,39 @@ namespace FestivalHue.Models
     public class FestivalHueContext : DbContext
     {
         public FestivalHueContext(DbContextOptions<FestivalHueContext> options) : base(options) { }
-        #region DbSet
         public DbSet<Role> Roles { get; set; }
 
-        public DbSet<Admin> Admin { get; set; }
+        public DbSet<About> Abouts { get; set; }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<TicketType> TicketType { get; set; }
-        public DbSet<Checkin> Checkin { get; set; }
-        public DbSet<Group> Group { get; set; }
-        public DbSet<Location> Location { get; set; }
-        public DbSet<Menu> Menu { get; set; }
-        public DbSet<News> News { get; set; }
-        public DbSet<Program> Program { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<Service> Service { get; set; }
-        public DbSet<SubMenu> SubMenu { get; set; }
-        public DbSet<TicketLocation> TicketLocation { get; set; }
-        public DbSet<FavouriteProgram> FavouriteProgram { get; set; }
-        public DbSet<FavouriteService> FavouriteService { get; set; }
-        public DbSet<Notification> Notification { get; set; }
-        #endregion
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<TicketType> TicketTypes { get; set; }
+        public DbSet<Checkin> Checkins { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<News> Newss { get; set; }
+        public DbSet<Programm> Programms { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<SubMenu> SubMenus { get; set; }
+        public DbSet<TicketLocation> TicketLocations { get; set; }
+        public DbSet<FavouriteProgram> FavouritePrograms { get; set; }
+        public DbSet<FavouriteService> FavouriteServices { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Checkin>()
-                .HasKey(c => new { c.TicketId, c.UserId });
+                .HasKey(c => new { c.TicketId, c.AdminId });
             modelBuilder.Entity<FavouriteProgram>()
-               .HasKey(c => new { c.UserId, c.ProgramId });
+                .HasKey(c => new { c.UserId, c.ProgramId });
             modelBuilder.Entity<FavouriteService>()
-              .HasKey(c => new { c.UserId, c.ServiceId });
+               .HasKey(c => new { c.UserId, c.ServiceId });
             modelBuilder.Entity<Notification>()
-             .HasKey(c => new { c.UserId, c.ProgramId });
+               .HasKey(c => new { c.UserId, c.ProgramId });
         }
-
-
     }
 }

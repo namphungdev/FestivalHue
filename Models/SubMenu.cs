@@ -18,8 +18,6 @@ namespace FestivalHue.Models
         public int MenuId { get; set; }
         public virtual Menu Menu { get; set; }
 
-        public virtual ICollection<SubMenu> SubMenus { get; set; }
-
         public virtual ICollection<Service> Services { get; set; }
 
 

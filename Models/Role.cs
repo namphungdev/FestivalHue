@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FestivalHue.Models;
 
 namespace FestivalHue.Models
 {
@@ -14,4 +15,6 @@ namespace FestivalHue.Models
 
         public virtual ICollection<Admin> Admins { get; set; }
     }
+
+
 }

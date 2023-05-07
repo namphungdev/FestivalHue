@@ -1,5 +1,6 @@
-using FestivalHue.Models;
+﻿using FestivalHue.Models;
 using Microsoft.EntityFrameworkCore;
+using FestivalHue.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

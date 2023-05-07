@@ -15,7 +15,7 @@ namespace FestivalHue.Models
         [Required]
         public int TypeData { get; set; }
 
-        public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<SubMenu> SubMenus { get; set; }
 
     }
 }

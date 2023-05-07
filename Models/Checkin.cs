@@ -6,20 +6,16 @@ namespace FestivalHue.Models
     [Table("Checkin")]
     public class Checkin
     {
-        [Key]
-        [Column(Order = 1)]
+        
+        public int AdminId { get; set; }
+        
         public int TicketId { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        public virtual Ticket Ticket { get; set; }
-        [Key]
-        [Column(Order = 2)]
-        public int UserId { get; set; }
-
-        public virtual User User { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public string Status { get; set; }
-
+        public bool Status { get; set; }
+        
+        public Ticket Ticket { get; set; }
+        
+        public Admin Admin { get; set; }
     }
 }

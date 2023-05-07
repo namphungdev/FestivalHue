@@ -22,6 +22,8 @@ namespace FestivalHue.Models
         public virtual User User { get; set; }
 
         public virtual ICollection<Admin> Admins { get; set; }
+        public  ICollection<Checkin> Checkins { get; set; }
+
 
 
 

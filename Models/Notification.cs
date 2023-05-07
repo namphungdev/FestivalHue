@@ -9,8 +9,7 @@ namespace FestivalHue.Models
         public int UserId { get; set; }
         public virtual User User { get; set; }
         public int ProgramId { get; set; }
-        public virtual Program Program { get; set; }
-
+        public virtual Programm Programm { get; set; }
         public int ProgramName { get; set; }
         public DateTime FDate { get; set; }
 

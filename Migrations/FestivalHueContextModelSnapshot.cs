@@ -37,6 +37,44 @@ namespace FestivalHue.Migrations
                     b.ToTable("AdminTicket");
                 });
 
+            modelBuilder.Entity("FestivalHue.Models.About", b =>
+                {
+                    b.Property<int>("AboutId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AboutId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AboutId");
+
+                    b.ToTable("About");
+                });
+
             modelBuilder.Entity("FestivalHue.Models.Admin", b =>
                 {
                     b.Property<int>("AdminId")
@@ -102,21 +140,23 @@ namespace FestivalHue.Migrations
             modelBuilder.Entity("FestivalHue.Models.Checkin", b =>
                 {
                     b.Property<int>("TicketId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
+                        .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
+                    b.Property<int>("AdminId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
-                    b.HasKey("TicketId", "UserId");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TicketId", "AdminId");
+
+                    b.HasIndex("AdminId");
 
                     b.HasIndex("UserId");
 
@@ -131,13 +171,16 @@ namespace FestivalHue.Migrations
                     b.Property<int>("ProgramId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProgrammProgramId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "ProgramId");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("ProgrammProgramId");
 
                     b.ToTable("FavouriteProgram");
                 });
@@ -265,9 +308,6 @@ namespace FestivalHue.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuId"));
 
-                    b.Property<int?>("MenuId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("PathIcon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -280,8 +320,6 @@ namespace FestivalHue.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MenuId");
-
-                    b.HasIndex("MenuId1");
 
                     b.ToTable("Menu");
                 });
@@ -372,14 +410,17 @@ namespace FestivalHue.Migrations
                     b.Property<int>("ProgramName")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProgrammProgramId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserId", "ProgramId");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("ProgrammProgramId");
 
                     b.ToTable("Notification");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Program", b =>
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
                 {
                     b.Property<int>("ProgramId")
                         .ValueGeneratedOnAdd()
@@ -518,9 +559,6 @@ namespace FestivalHue.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubMenuId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -531,8 +569,6 @@ namespace FestivalHue.Migrations
                     b.HasKey("SubMenuId");
 
                     b.HasIndex("MenuId");
-
-                    b.HasIndex("SubMenuId1");
 
                     b.ToTable("SubMenu");
                 });
@@ -650,11 +686,11 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -689,44 +725,18 @@ namespace FestivalHue.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("RoleId")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Updated_at")
                         .HasMaxLength(50)
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("UserId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId1");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("ProgramUser", b =>
-                {
-                    b.Property<int>("ProgramsProgramId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProgramsProgramId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("ProgramUser");
                 });
 
             modelBuilder.Entity("ServiceSubMenu", b =>
@@ -749,12 +759,12 @@ namespace FestivalHue.Migrations
                     b.Property<int>("ServicesServiceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersUserId")
+                    b.Property<int>("UsersId")
                         .HasColumnType("int");
 
-                    b.HasKey("ServicesServiceId", "UsersUserId");
+                    b.HasKey("ServicesServiceId", "UsersId");
 
-                    b.HasIndex("UsersUserId");
+                    b.HasIndex("UsersId");
 
                     b.ToTable("ServiceUser");
                 });
@@ -791,38 +801,42 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.Checkin", b =>
                 {
+                    b.HasOne("FestivalHue.Models.Admin", "Admin")
+                        .WithMany("Checkins")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FestivalHue.Models.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("Checkins")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FestivalHue.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("FestivalHue.Models.User", null)
+                        .WithMany("Checkins")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Admin");
 
                     b.Navigation("Ticket");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.FavouriteProgram", b =>
                 {
-                    b.HasOne("FestivalHue.Models.Program", "Program")
-                        .WithMany()
-                        .HasForeignKey("ProgramId")
+                    b.HasOne("FestivalHue.Models.Programm", "Programm")
+                        .WithMany("FavouritePrograms")
+                        .HasForeignKey("ProgrammProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.User", "User")
-                        .WithMany()
+                        .WithMany("FavouritePrograms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Program");
+                    b.Navigation("Programm");
 
                     b.Navigation("User");
                 });
@@ -846,13 +860,6 @@ namespace FestivalHue.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Menu", b =>
-                {
-                    b.HasOne("FestivalHue.Models.Menu", null)
-                        .WithMany("Menus")
-                        .HasForeignKey("MenuId1");
-                });
-
             modelBuilder.Entity("FestivalHue.Models.News", b =>
                 {
                     b.HasOne("FestivalHue.Models.Admin", "Admin")
@@ -866,9 +873,9 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.Notification", b =>
                 {
-                    b.HasOne("FestivalHue.Models.Program", "Program")
+                    b.HasOne("FestivalHue.Models.Programm", "Programm")
                         .WithMany()
-                        .HasForeignKey("ProgramId")
+                        .HasForeignKey("ProgrammProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -878,12 +885,12 @@ namespace FestivalHue.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Program");
+                    b.Navigation("Programm");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Program", b =>
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
                 {
                     b.HasOne("FestivalHue.Models.Admin", "Admin")
                         .WithMany()
@@ -913,14 +920,10 @@ namespace FestivalHue.Migrations
             modelBuilder.Entity("FestivalHue.Models.SubMenu", b =>
                 {
                     b.HasOne("FestivalHue.Models.Menu", "Menu")
-                        .WithMany()
+                        .WithMany("SubMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FestivalHue.Models.SubMenu", null)
-                        .WithMany("SubMenus")
-                        .HasForeignKey("SubMenuId1");
 
                     b.Navigation("Menu");
                 });
@@ -942,36 +945,6 @@ namespace FestivalHue.Migrations
                     b.Navigation("TicketType");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FestivalHue.Models.User", b =>
-                {
-                    b.HasOne("FestivalHue.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FestivalHue.Models.User", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ProgramUser", b =>
-                {
-                    b.HasOne("FestivalHue.Models.Program", null)
-                        .WithMany()
-                        .HasForeignKey("ProgramsProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FestivalHue.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ServiceSubMenu", b =>
@@ -999,9 +972,14 @@ namespace FestivalHue.Migrations
 
                     b.HasOne("FestivalHue.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersUserId")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FestivalHue.Models.Admin", b =>
+                {
+                    b.Navigation("Checkins");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Location", b =>
@@ -1011,7 +989,12 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.Menu", b =>
                 {
-                    b.Navigation("Menus");
+                    b.Navigation("SubMenus");
+                });
+
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
+                {
+                    b.Navigation("FavouritePrograms");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Role", b =>
@@ -1019,9 +1002,9 @@ namespace FestivalHue.Migrations
                     b.Navigation("Admins");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.SubMenu", b =>
+            modelBuilder.Entity("FestivalHue.Models.Ticket", b =>
                 {
-                    b.Navigation("SubMenus");
+                    b.Navigation("Checkins");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.TicketType", b =>
@@ -1031,9 +1014,11 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.User", b =>
                 {
-                    b.Navigation("Tickets");
+                    b.Navigation("Checkins");
 
-                    b.Navigation("Users");
+                    b.Navigation("FavouritePrograms");
+
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
