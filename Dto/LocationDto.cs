@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FestivalHue.Models
+namespace FestivalHue.Dto
 {
-    [Table("Location")]
-    public class Location
+    public class LocationDto
     {
         [Key]
         public int LocationId { get; set; }
@@ -19,7 +17,6 @@ namespace FestivalHue.Models
         public string Lattitude { get; set; }
         public string Typedata { get; set; }
         public string Content { get; set; }
-
-        public virtual ICollection<Programm> Programms { get; set; }
+      
     }
 }

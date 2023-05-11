@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FestivalHue.Models
+namespace FestivalHue.Dto
 {
-    [Table("FavouriteService")]
-    public class FavouriteService
+
+    public class FavouriteServiceDto
     {   
         public int UserId { get; set; }
      
@@ -15,8 +14,6 @@ namespace FestivalHue.Models
         public DateTime Created_at { get; set; } = DateTime.Now;
        
         public DateTime Updated_at { get; set; } = DateTime.Now;
-        public virtual User User { get; set; }
-        public virtual Service Service { get; set; }
-
+   
     }
 }

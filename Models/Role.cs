@@ -9,11 +9,11 @@ namespace FestivalHue.Models
     {
         [Key]
         public int RoleId { get; set; }
-        [MaxLength(50)]
-        [Required]
+       
         public string RoleName { get; set; }
 
         public virtual ICollection<Admin> Admins { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 
 

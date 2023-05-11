@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using NuGet.Protocol;
 
 namespace FestivalHue.Controllers
 {
@@ -14,31 +17,53 @@ namespace FestivalHue.Controllers
     public class AdminsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public AdminsController(FestivalHueContext context)
+        public AdminsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Admins
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
+        public async Task<ActionResult<IEnumerable<AdminDto>>> GetAdmins()
         {
-          if (_context.Admins == null)
-          {
-              return NotFound();
-          }
-            return await _context.Admins.ToListAsync();
+            if (_context.Admins == null)
+            {
+                return NotFound();
+            }   
+            var admin = await _context.Admins.ToListAsync();
+            var response = new
+            {              
+                admin = admin.Select(x => new { 
+                    AdminId = x.AdminId,
+                    AdminName = x.AdminName,
+                    Email = x.Email,
+                    Password = x.Password, 
+                    Phone = x.Phone,
+                    Address = x.Address,
+                    Avatar = x.Avatar,
+                    RoleId = x.RoleId,
+                    RoleName = _context.Roles.Find(x.RoleId).RoleName,
+                    Created_at = x.Created_at,
+                    Updated_at = x.Updated_at,
+                }).ToList()
+            };
+
+
+
+            return  Ok(response);
         }
 
         // GET: api/Admins/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Admin>> GetAdmin(int id)
+        public async Task<ActionResult<AdminDto>> GetAdmin(int id)
         {
-          if (_context.Admins == null)
-          {
-              return NotFound();
-          }
+            if (_context.Admins == null)
+            {
+                return NotFound();
+            }
             var admin = await _context.Admins.FindAsync(id);
 
             if (admin == null)
@@ -46,11 +71,10 @@ namespace FestivalHue.Controllers
                 return NotFound();
             }
 
-            return admin;
+            return _mapper.Map<AdminDto>(admin);
         }
 
         // PUT: api/Admins/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdmin(int id, Admin admin)
         {
@@ -81,15 +105,15 @@ namespace FestivalHue.Controllers
         }
 
         // POST: api/Admins
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
+        public async Task<ActionResult<Admin>> PostAdmin(AdminDto admin)
         {
-          if (_context.Admins == null)
-          {
-              return Problem("Entity set 'FestivalHueContext.Admins'  is null.");
-          }
-            _context.Admins.Add(admin);
+            if (admin == null)
+            {
+                return Problem("Entity set 'FestivalHueContext.Admins'  is null.");
+            }
+            _context.Admins.Add(_mapper.Map<Admin>(admin));
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAdmin", new { id = admin.AdminId }, admin);

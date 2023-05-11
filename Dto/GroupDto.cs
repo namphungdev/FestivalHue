@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FestivalHue.Models
+namespace FestivalHue.Dto
 {
-    [Table("Group")]
-    public class Group
+    public class GroupDto
     {
         [Key]
         public int GroupId { get; set; }
         public string GroupName { get; set; }
         public string GroupDescription { get; set; }
-        public virtual ICollection<Programm> Programms { get; set; }
+  
     }
 }

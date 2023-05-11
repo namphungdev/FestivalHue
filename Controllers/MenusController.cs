@@ -50,7 +50,6 @@ namespace FestivalHue.Controllers
         }
 
         // PUT: api/Menus/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMenu(int id, Menu menu)
         {
@@ -81,7 +80,6 @@ namespace FestivalHue.Controllers
         }
 
         // POST: api/Menus
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Menu>> PostMenu(Menu menu)
         {

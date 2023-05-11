@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FestivalHue.Models
+namespace FestivalHue.Dto
 {
-    [Table("Service")]
-    public class Service
+    public class ServiceDto
     {
         [Key]
         public int ServiceId { get; set; }
@@ -12,13 +10,10 @@ namespace FestivalHue.Models
         public string PathImage { get; set; }
         public int TypeData { get; set; }
         public int SubMenuId { get; set; }
-        public virtual ICollection<SubMenu> SubMenus { get; set; }
         public string Summary { get; set; }
         public int Longtitude { get; set; }
         public int Latitude { get; set; }
         public string Content { get; set; }
-        public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<FavouriteService> FavouriteServices { get; set; }
 
     }
 }

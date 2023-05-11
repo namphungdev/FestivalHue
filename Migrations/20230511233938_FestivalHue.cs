@@ -36,8 +36,8 @@ namespace FestivalHue.Migrations
                 {
                     GroupId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    GroupDescription = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GroupDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,17 +50,17 @@ namespace FestivalHue.Migrations
                 {
                     LocationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LocationAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LocationImage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LocationMap = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Pathimage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    longtitude = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Lattitude = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Typedata = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    LocationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocationAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocationImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LocationMap = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Pathimage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    longtitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lattitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Typedata = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +88,7 @@ namespace FestivalHue.Migrations
                 {
                     RoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,27 +153,6 @@ namespace FestivalHue.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CMND = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Created_at = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SubMenu",
                 columns: table => new
                 {
@@ -201,25 +180,19 @@ namespace FestivalHue.Migrations
                 {
                     AdminId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AdminName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    RoleId = table.Column<int>(type: "int", maxLength: 50, nullable: false),
-                    Created_at = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
-                    LocationId = table.Column<int>(type: "int", nullable: true)
+                    AdminName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Admin", x => x.AdminId);
-                    table.ForeignKey(
-                        name: "FK_Admin_Location_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Location",
-                        principalColumn: "LocationId");
                     table.ForeignKey(
                         name: "FK_Admin_Role_RoleId",
                         column: x => x.RoleId,
@@ -229,85 +202,30 @@ namespace FestivalHue.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FavouriteService",
+                name: "User",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FavouriteService", x => new { x.UserId, x.ServiceId });
-                    table.ForeignKey(
-                        name: "FK_FavouriteService_Service_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Service",
-                        principalColumn: "ServiceId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FavouriteService_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServiceUser",
-                columns: table => new
-                {
-                    ServicesServiceId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceUser", x => new { x.ServicesServiceId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_ServiceUser_Service_ServicesServiceId",
-                        column: x => x.ServicesServiceId,
-                        principalTable: "Service",
-                        principalColumn: "ServiceId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ServiceUser_User_UsersId",
-                        column: x => x.UsersId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ticket",
-                columns: table => new
-                {
-                    TicketId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    TicketTypeId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CMND = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
+                    table.PrimaryKey("PK_User", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Ticket_TicketType_TicketTypeId",
-                        column: x => x.TicketTypeId,
-                        principalTable: "TicketType",
-                        principalColumn: "TicketTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Ticket_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
+                        name: "FK_User_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -413,59 +331,86 @@ namespace FestivalHue.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdminTicket",
+                name: "FavouriteService",
                 columns: table => new
                 {
-                    AdminsAdminId = table.Column<int>(type: "int", nullable: false),
-                    TicketsTicketId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_at = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdminTicket", x => new { x.AdminsAdminId, x.TicketsTicketId });
+                    table.PrimaryKey("PK_FavouriteService", x => new { x.UserId, x.ServiceId });
                     table.ForeignKey(
-                        name: "FK_AdminTicket_Admin_AdminsAdminId",
-                        column: x => x.AdminsAdminId,
-                        principalTable: "Admin",
-                        principalColumn: "AdminId",
+                        name: "FK_FavouriteService_Service_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Service",
+                        principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AdminTicket_Ticket_TicketsTicketId",
-                        column: x => x.TicketsTicketId,
-                        principalTable: "Ticket",
-                        principalColumn: "TicketId",
+                        name: "FK_FavouriteService_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Checkin",
+                name: "ServiceUser",
                 columns: table => new
                 {
-                    AdminId = table.Column<int>(type: "int", nullable: false),
-                    TicketId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    ServicesServiceId = table.Column<int>(type: "int", nullable: false),
+                    UsersUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Checkin", x => new { x.TicketId, x.AdminId });
+                    table.PrimaryKey("PK_ServiceUser", x => new { x.ServicesServiceId, x.UsersUserId });
                     table.ForeignKey(
-                        name: "FK_Checkin_Admin_AdminId",
-                        column: x => x.AdminId,
-                        principalTable: "Admin",
-                        principalColumn: "AdminId",
+                        name: "FK_ServiceUser_Service_ServicesServiceId",
+                        column: x => x.ServicesServiceId,
+                        principalTable: "Service",
+                        principalColumn: "ServiceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Checkin_Ticket_TicketId",
-                        column: x => x.TicketId,
-                        principalTable: "Ticket",
-                        principalColumn: "TicketId",
+                        name: "FK_ServiceUser_User_UsersUserId",
+                        column: x => x.UsersUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ticket",
+                columns: table => new
+                {
+                    TicketId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    TicketTypeId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
+                    table.ForeignKey(
+                        name: "FK_Ticket_TicketType_TicketTypeId",
+                        column: x => x.TicketTypeId,
+                        principalTable: "TicketType",
+                        principalColumn: "TicketTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Checkin_User_UserId",
+                        name: "FK_Ticket_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id");
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -484,13 +429,13 @@ namespace FestivalHue.Migrations
                         column: x => x.ProgramId,
                         principalTable: "Program",
                         principalColumn: "ProgramId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FavouriteProgram_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -510,19 +455,46 @@ namespace FestivalHue.Migrations
                         column: x => x.ProgramId,
                         principalTable: "Program",
                         principalColumn: "ProgramId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Notification_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Admin_LocationId",
-                table: "Admin",
-                column: "LocationId");
+            migrationBuilder.CreateTable(
+                name: "Checkin",
+                columns: table => new
+                {
+                    AdminId = table.Column<int>(type: "int", nullable: false),
+                    TicketId = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Checkin", x => new { x.AdminId, x.TicketId });
+                    table.ForeignKey(
+                        name: "FK_Checkin_Admin_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Admin",
+                        principalColumn: "AdminId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Checkin_Ticket_TicketId",
+                        column: x => x.TicketId,
+                        principalTable: "Ticket",
+                        principalColumn: "TicketId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Checkin_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admin_RoleId",
@@ -530,14 +502,9 @@ namespace FestivalHue.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdminTicket_TicketsTicketId",
-                table: "AdminTicket",
-                column: "TicketsTicketId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Checkin_AdminId",
+                name: "IX_Checkin_TicketId",
                 table: "Checkin",
-                column: "AdminId");
+                column: "TicketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Checkin_UserId",
@@ -585,9 +552,9 @@ namespace FestivalHue.Migrations
                 column: "SubMenusSubMenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceUser_UsersId",
+                name: "IX_ServiceUser_UsersUserId",
                 table: "ServiceUser",
-                column: "UsersId");
+                column: "UsersUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubMenu_MenuId",
@@ -603,6 +570,11 @@ namespace FestivalHue.Migrations
                 name: "IX_Ticket_UserId",
                 table: "Ticket",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_RoleId",
+                table: "User",
+                column: "RoleId");
         }
 
         /// <inheritdoc />
@@ -610,9 +582,6 @@ namespace FestivalHue.Migrations
         {
             migrationBuilder.DropTable(
                 name: "About");
-
-            migrationBuilder.DropTable(
-                name: "AdminTicket");
 
             migrationBuilder.DropTable(
                 name: "Checkin");
@@ -663,10 +632,10 @@ namespace FestivalHue.Migrations
                 name: "Group");
 
             migrationBuilder.DropTable(
-                name: "Menu");
+                name: "Location");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Menu");
 
             migrationBuilder.DropTable(
                 name: "Role");

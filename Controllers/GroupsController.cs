@@ -50,7 +50,6 @@ namespace FestivalHue.Controllers
         }
 
         // PUT: api/Groups/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGroup(int id, Group @group)
         {
@@ -81,7 +80,6 @@ namespace FestivalHue.Controllers
         }
 
         // POST: api/Groups
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Group>> PostGroup(Group @group)
         {

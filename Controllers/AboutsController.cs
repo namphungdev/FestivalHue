@@ -50,7 +50,6 @@ namespace FestivalHue.Controllers
         }
 
         // PUT: api/Abouts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAbout(int id, About about)
         {
@@ -81,7 +80,6 @@ namespace FestivalHue.Controllers
         }
 
         // POST: api/Abouts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<About>> PostAbout(About about)
         {

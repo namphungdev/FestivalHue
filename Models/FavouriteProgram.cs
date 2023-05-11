@@ -9,7 +9,7 @@ namespace FestivalHue.Models
         public int UserId { get; set; }
         public int ProgramId { get; set; }
         public string Title { get; set; }
-        public  User User { get; set; }
-        public  Programm Programm { get; set; }
+        public virtual User User { get; set; }
+        public virtual Programm Programm { get; set; }
     }
 }

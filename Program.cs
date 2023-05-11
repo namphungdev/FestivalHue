@@ -1,6 +1,7 @@
 ﻿using FestivalHue.Models;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Controllers;
+using FestivalHue.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
+/*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
+builder.Services.AddAutoMapper(typeof(ApplicationMapper));
 builder.Services.AddDbContext<FestivalHueContext>(options => { 
     options.UseSqlServer(builder.Configuration.GetConnectionString("FestivalHue")); 
 });

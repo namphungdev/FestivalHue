@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
 
 namespace FestivalHue.Controllers
 {
@@ -14,55 +16,56 @@ namespace FestivalHue.Controllers
     public class RolesController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public RolesController(FestivalHueContext context)
+        public RolesController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles()
         {
           if (_context.Roles == null)
           {
               return NotFound();
           }
-            return await _context.Roles.ToListAsync();
+            return await _context.Roles.Select(x => _mapper.Map<RoleDto>(x)).ToListAsync();
         }
 
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
+        public async Task<ActionResult<RoleDto>> GetRole(int id)
         {
           if (_context.Roles == null)
           {
               return NotFound();
           }
+          // get role by id 
             var role = await _context.Roles.FindAsync(id);
-
             if (role == null)
             {
-                return NotFound();
+                return NotFound("Role not found.");
             }
+            return _mapper.Map<RoleDto>(role);
 
-            return role;
         }
 
         // PUT: api/Roles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
+        public async Task<IActionResult> PutRole(int id, RoleDto role)
         {
-            if (id != role.RoleId)
+           var roleEntity = _mapper.Map<Role>(role);
+            if (id != roleEntity.RoleId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(role).State = EntityState.Modified;
-
+          
             try
             {
+                _context.Entry(roleEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,15 +84,16 @@ namespace FestivalHue.Controllers
         }
 
         // POST: api/Roles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Role>> PostRole(Role role)
+        public async Task<ActionResult<Role>> PostRole(RoleDto role)
         {
           if (_context.Roles == null)
           {
               return Problem("Entity set 'FestivalHueContext.Roles'  is null.");
           }
-            _context.Roles.Add(role);
+          var roleEntity = _mapper.Map<Role>(role);
+            _context.Roles.Add(roleEntity);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRole", new { id = role.RoleId }, role);

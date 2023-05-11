@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FestivalHue.Models
+namespace FestivalHue.Dto
 {
-    [Table("Admin")]
-    public class Admin
+    public class AdminDto
     {
         [Key]
         public int AdminId { get; set; }
@@ -19,12 +15,8 @@ namespace FestivalHue.Models
         public int? RoleId { get; set; }
         public DateTime Created_at { get; set; } = DateTime.Now;
         public DateTime Updated_at { get; set; } = DateTime.Now;
-
-        public virtual Role Role { get; set; }
       
-        public virtual ICollection<Checkin> Checkins { get; set; }
-
-        public virtual ICollection<Programm> Programms { get; set; }
-
+       
     }
+
 }

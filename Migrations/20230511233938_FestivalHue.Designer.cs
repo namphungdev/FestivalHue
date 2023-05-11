@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalHue.Migrations
 {
     [DbContext(typeof(FestivalHueContext))]
-    [Migration("20230507164021_FestivalHue")]
+    [Migration("20230511233938_FestivalHue")]
     partial class FestivalHue
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace FestivalHue.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AdminTicket", b =>
-                {
-                    b.Property<int>("AdminsAdminId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketsTicketId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AdminsAdminId", "TicketsTicketId");
-
-                    b.HasIndex("TicketsTicketId");
-
-                    b.ToTable("AdminTicket");
-                });
 
             modelBuilder.Entity("FestivalHue.Models.About", b =>
                 {
@@ -88,52 +73,39 @@ namespace FestivalHue.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AdminName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasMaxLength(50)
+                    b.Property<int?>("RoleId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Updated_at")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
                     b.HasKey("AdminId");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("RoleId");
 
@@ -142,10 +114,10 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.Checkin", b =>
                 {
-                    b.Property<int>("TicketId")
+                    b.Property<int>("AdminId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AdminId")
+                    b.Property<int>("TicketId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -157,9 +129,9 @@ namespace FestivalHue.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("TicketId", "AdminId");
+                    b.HasKey("AdminId", "TicketId");
 
-                    b.HasIndex("AdminId");
+                    b.HasIndex("TicketId");
 
                     b.HasIndex("UserId");
 
@@ -219,13 +191,11 @@ namespace FestivalHue.Migrations
 
                     b.Property<string>("GroupDescription")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GroupId");
 
@@ -242,58 +212,47 @@ namespace FestivalHue.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lattitude")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationAddress")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationImage")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationMap")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LocationName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pathimage")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Typedata")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("longtitude")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LocationId");
 
@@ -417,7 +376,7 @@ namespace FestivalHue.Migrations
                     b.ToTable("Notification");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Program", b =>
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
                 {
                     b.Property<int>("ProgramId")
                         .ValueGeneratedOnAdd()
@@ -492,8 +451,7 @@ namespace FestivalHue.Migrations
 
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoleId");
 
@@ -683,35 +641,30 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Avatar")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CMND")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -719,19 +672,21 @@ namespace FestivalHue.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Updated_at")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
                 });
@@ -756,37 +711,18 @@ namespace FestivalHue.Migrations
                     b.Property<int>("ServicesServiceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int>("UsersUserId")
                         .HasColumnType("int");
 
-                    b.HasKey("ServicesServiceId", "UsersId");
+                    b.HasKey("ServicesServiceId", "UsersUserId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UsersUserId");
 
                     b.ToTable("ServiceUser");
                 });
 
-            modelBuilder.Entity("AdminTicket", b =>
-                {
-                    b.HasOne("FestivalHue.Models.Admin", null)
-                        .WithMany()
-                        .HasForeignKey("AdminsAdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FestivalHue.Models.Ticket", null)
-                        .WithMany()
-                        .HasForeignKey("TicketsTicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FestivalHue.Models.Admin", b =>
                 {
-                    b.HasOne("FestivalHue.Models.Location", null)
-                        .WithMany("Admins")
-                        .HasForeignKey("LocationId");
-
                     b.HasOne("FestivalHue.Models.Role", "Role")
                         .WithMany("Admins")
                         .HasForeignKey("RoleId")
@@ -801,13 +737,13 @@ namespace FestivalHue.Migrations
                     b.HasOne("FestivalHue.Models.Admin", "Admin")
                         .WithMany("Checkins")
                         .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.Ticket", "Ticket")
                         .WithMany("Checkins")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.User", null)
@@ -821,19 +757,19 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.FavouriteProgram", b =>
                 {
-                    b.HasOne("FestivalHue.Models.Program", "Program")
+                    b.HasOne("FestivalHue.Models.Programm", "Programm")
                         .WithMany("FavouritePrograms")
                         .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.User", "User")
                         .WithMany("FavouritePrograms")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Program");
+                    b.Navigation("Programm");
 
                     b.Navigation("User");
                 });
@@ -841,13 +777,13 @@ namespace FestivalHue.Migrations
             modelBuilder.Entity("FestivalHue.Models.FavouriteService", b =>
                 {
                     b.HasOne("FestivalHue.Models.Service", "Service")
-                        .WithMany()
+                        .WithMany("FavouriteServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.User", "User")
-                        .WithMany()
+                        .WithMany("FavouriteServices")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -870,39 +806,39 @@ namespace FestivalHue.Migrations
 
             modelBuilder.Entity("FestivalHue.Models.Notification", b =>
                 {
-                    b.HasOne("FestivalHue.Models.Program", "Program")
-                        .WithMany()
+                    b.HasOne("FestivalHue.Models.Programm", "Programm")
+                        .WithMany("Notifications")
                         .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Notifications")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Program");
+                    b.Navigation("Programm");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Program", b =>
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
                 {
                     b.HasOne("FestivalHue.Models.Admin", "Admin")
-                        .WithMany()
+                        .WithMany("Programms")
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.Group", "Group")
-                        .WithMany()
+                        .WithMany("Programms")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FestivalHue.Models.Location", "Location")
-                        .WithMany()
+                        .WithMany("Programms")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -944,6 +880,17 @@ namespace FestivalHue.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("FestivalHue.Models.User", b =>
+                {
+                    b.HasOne("FestivalHue.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("ServiceSubMenu", b =>
                 {
                     b.HasOne("FestivalHue.Models.Service", null)
@@ -969,7 +916,7 @@ namespace FestivalHue.Migrations
 
                     b.HasOne("FestivalHue.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UsersUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -977,11 +924,18 @@ namespace FestivalHue.Migrations
             modelBuilder.Entity("FestivalHue.Models.Admin", b =>
                 {
                     b.Navigation("Checkins");
+
+                    b.Navigation("Programms");
+                });
+
+            modelBuilder.Entity("FestivalHue.Models.Group", b =>
+                {
+                    b.Navigation("Programms");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Location", b =>
                 {
-                    b.Navigation("Admins");
+                    b.Navigation("Programms");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Menu", b =>
@@ -989,14 +943,23 @@ namespace FestivalHue.Migrations
                     b.Navigation("SubMenus");
                 });
 
-            modelBuilder.Entity("FestivalHue.Models.Program", b =>
+            modelBuilder.Entity("FestivalHue.Models.Programm", b =>
                 {
                     b.Navigation("FavouritePrograms");
+
+                    b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Role", b =>
                 {
                     b.Navigation("Admins");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("FestivalHue.Models.Service", b =>
+                {
+                    b.Navigation("FavouriteServices");
                 });
 
             modelBuilder.Entity("FestivalHue.Models.Ticket", b =>
@@ -1014,6 +977,10 @@ namespace FestivalHue.Migrations
                     b.Navigation("Checkins");
 
                     b.Navigation("FavouritePrograms");
+
+                    b.Navigation("FavouriteServices");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Tickets");
                 });

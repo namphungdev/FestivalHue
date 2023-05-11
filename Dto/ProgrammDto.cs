@@ -1,22 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FestivalHue.Models
+
+namespace FestivalHue.Dto
 {
-    [Table("Program")]
+
     public class Programm
     {
         [Key]
         public int ProgramId { get; set; }
         public int LocationId { get; set; }
-        public virtual Location Location { get; set; }
+      
 
         public int GroupId { get; set; }
-        public virtual Group Group { get; set; }
-
+     
         public int AdminId { get; set; }
-        public virtual Admin Admin { get; set; }
-
+  
         public string ProgramName { get; set; }
 
         public string ProgramContent { get; set; }
@@ -39,12 +37,7 @@ namespace FestivalHue.Models
 
         public int Total { get; set; }
 
-        /* public virtual ICollection<User> Users { get; set; }*/
-        public ICollection<FavouriteProgram> FavouritePrograms { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
-
-
-
+    
 
     }
 }
