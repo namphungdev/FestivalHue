@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalHue.Migrations
 {
     [DbContext(typeof(FestivalHueContext))]
-    [Migration("20230511233938_FestivalHue")]
+    [Migration("20230512021710_FestivalHue")]
     partial class FestivalHue
     {
         /// <inheritdoc />
@@ -24,6 +24,23 @@ namespace FestivalHue.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("FestivalHue.Dto.GroupDto", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("GroupDto");
+                });
 
             modelBuilder.Entity("FestivalHue.Models.About", b =>
                 {
@@ -188,10 +205,6 @@ namespace FestivalHue.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
-
-                    b.Property<string>("GroupDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupName")
                         .IsRequired()

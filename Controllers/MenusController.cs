@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using FestivalHue.Dto;
+using FestivalHue.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FestivalHue.Models;
+using NuGet.Protocol;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
@@ -14,26 +13,57 @@ namespace FestivalHue.Controllers
     public class MenusController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public MenusController(FestivalHueContext context)
+        public MenusController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
-
+        
         // GET: api/Menus
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenus()
+        public async Task<ActionResult<IEnumerable<MenuDto>>> GetMenus()
         {
           if (_context.Menus == null)
           {
               return NotFound();
           }
-            return await _context.Menus.ToListAsync();
+            return await _context.Menus.Select(x => _mapper.Map<MenuDto>(x)).ToListAsync();
+        }
+        [HttpGet("/api/GetMenusAndSubmenu")]
+        public async Task<ActionResult<IEnumerable<MenuDto>>> GetMenusAndSubmenu()
+        {
+            if (_context.Menus == null)
+            {
+                return NotFound();
+            }
+            var menu = await _context.Menus.ToListAsync();
+            var subMenu = await _context.SubMenus.ToListAsync();
+            var response = new
+            {
+              data = menu.Select(x => new {
+                  MenuId = x.MenuId,
+                  Title = x.Title,
+                  PathIcon = x.PathIcon,
+                  TypeData = x.TypeData,
+                  //get sub menu
+                    SubMenus = subMenu.Where(y => y.MenuId == x.MenuId).Select(y => new
+                    {
+                        SubMenuId = y.SubMenuId,
+                        Title = y.Title,
+                        PathIcon = y.PathIcon,
+                        MenuId = y.MenuId,
+                        TypeData = y.TypeData,                      
+                    }).ToList()                 
+                }).ToList()
+            };
+            return Ok(response);
         }
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<MenuDto>> GetMenu(int id)
         {
           if (_context.Menus == null)
           {
@@ -46,22 +76,22 @@ namespace FestivalHue.Controllers
                 return NotFound();
             }
 
-            return menu;
+            return _mapper.Map<MenuDto>(menu);
         }
-
+      
         // PUT: api/Menus/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenu(int id, Menu menu)
+        public async Task<IActionResult> PutMenu(int id, MenuDto menu)
         {
-            if (id != menu.MenuId)
+            var menuEntity = _mapper.Map<Menu>(menu);
+            if (id != menuEntity.MenuId)
             {
                 return BadRequest();
-            }
-
-            _context.Entry(menu).State = EntityState.Modified;
+            }       
 
             try
             {
+                _context.Entry(menuEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,13 +111,14 @@ namespace FestivalHue.Controllers
 
         // POST: api/Menus
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<Menu>> PostMenu(MenuDto menu)
         {
           if (_context.Menus == null)
           {
               return Problem("Entity set 'FestivalHueContext.Menus'  is null.");
           }
-            _context.Menus.Add(menu);
+            var menuEntity = _mapper.Map<Menu>(menu);
+            _context.Menus.Add(menuEntity);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMenu", new { id = menu.MenuId }, menu);

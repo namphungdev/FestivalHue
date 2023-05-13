@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using FestivalHue.Dto;
 
 namespace FestivalHue.Models
 {
@@ -188,5 +189,6 @@ namespace FestivalHue.Models
                 .OnDelete(DeleteBehavior.Restrict);
           
         }
+        public DbSet<FestivalHue.Dto.GroupDto>? GroupDto { get; set; }
     }
 }

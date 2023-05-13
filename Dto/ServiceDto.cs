@@ -11,8 +11,8 @@ namespace FestivalHue.Dto
         public int TypeData { get; set; }
         public int SubMenuId { get; set; }
         public string Summary { get; set; }
-        public int Longtitude { get; set; }
-        public int Latitude { get; set; }
+        public string Longtitude { get; set; }
+        public string Latitude { get; set; }
         public string Content { get; set; }
 
     }

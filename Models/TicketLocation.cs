@@ -9,21 +9,21 @@ namespace FestivalHue.Models
         [Key]
         public int TicketLocationId { get; set; }
         [Required]
-        public int Title { get; set; }
+        public string Title { get; set; }
 
         [Required]
-        public int Content { get; set; }
+        public string Content { get; set; }
         [Required]
-        public int Address { get; set; }
+        public string Address { get; set; }
 
         [Required]
-        public int SDT { get; set; }
+        public string SDT { get; set; }
         [Required]
-        public int Longtitude { get; set; }
+        public string Longtitude { get; set; }
         [Required]
-        public int Laititude { get; set; }
+        public string Laititude { get; set; }
         [Required]
-        public int Image { get; set; }
+        public string Image { get; set; }
         [Required]
         public int Arrange { get; set; }
         [Required]

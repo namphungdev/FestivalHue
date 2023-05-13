@@ -36,12 +36,24 @@ namespace FestivalHue.Migrations
                 {
                     GroupId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GroupDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Group", x => x.GroupId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupDto",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupDto", x => x.GroupId);
                 });
 
             migrationBuilder.CreateTable(
@@ -591,6 +603,9 @@ namespace FestivalHue.Migrations
 
             migrationBuilder.DropTable(
                 name: "FavouriteService");
+
+            migrationBuilder.DropTable(
+                name: "GroupDto");
 
             migrationBuilder.DropTable(
                 name: "News");

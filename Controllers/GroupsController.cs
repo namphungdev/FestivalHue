@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
@@ -14,54 +17,57 @@ namespace FestivalHue.Controllers
     public class GroupsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public GroupsController(FestivalHueContext context)
+        public GroupsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Groups
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Group>>> GetGroups()
+        public async Task<ActionResult<IEnumerable<GroupDto>>> GetGroups()
         {
           if (_context.Groups == null)
           {
               return NotFound();
           }
-            return await _context.Groups.ToListAsync();
+            return await _context.Groups.Select(x => _mapper.Map<GroupDto>(x)).ToListAsync();
         }
 
         // GET: api/Groups/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Group>> GetGroup(int id)
+        public async Task<ActionResult<GroupDto>> GetGroup(int id)
         {
           if (_context.Groups == null)
           {
               return NotFound();
           }
-            var @group = await _context.Groups.FindAsync(id);
+            var group = await _context.Groups.FindAsync(id);
 
-            if (@group == null)
+            if (group == null)
             {
                 return NotFound();
             }
 
-            return @group;
+            return _mapper.Map<GroupDto>(group);
         }
 
         // PUT: api/Groups/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGroup(int id, Group @group)
+        public async Task<IActionResult> PutGroup(int id, GroupDto group)
         {
-            if (id != @group.GroupId)
+            var groupEntity = _mapper.Map<Group>(group);
+            if (id != groupEntity.GroupId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@group).State = EntityState.Modified;
 
             try
             {
+                _context.Entry(groupEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,16 +87,18 @@ namespace FestivalHue.Controllers
 
         // POST: api/Groups
         [HttpPost]
-        public async Task<ActionResult<Group>> PostGroup(Group @group)
+        public async Task<ActionResult<Group>> PostGroup(GroupDto group)
         {
           if (_context.Groups == null)
           {
               return Problem("Entity set 'FestivalHueContext.Groups'  is null.");
           }
-            _context.Groups.Add(@group);
+            var groupEntity = _mapper.Map<Group>(group);
+            _context.Groups.Add(groupEntity);
+
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGroup", new { id = @group.GroupId }, @group);
+            return CreatedAtAction("GetGroup", new { id = group.GroupId }, group);
         }
 
         // DELETE: api/Groups/5

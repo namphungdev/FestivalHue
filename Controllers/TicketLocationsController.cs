@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
 
 namespace FestivalHue.Controllers
 {
@@ -14,21 +16,29 @@ namespace FestivalHue.Controllers
     public class TicketLocationsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public TicketLocationsController(FestivalHueContext context)
+        public TicketLocationsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/TicketLocations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketLocation>>> GetTicketLocations()
+        public async Task<ActionResult<IEnumerable<TicketLocationDto>>> GetTicketLocations()
         {
           if (_context.TicketLocations == null)
           {
               return NotFound();
           }
-            return await _context.TicketLocations.ToListAsync();
+          var ticketLocations = await _context.TicketLocations.ToListAsync();
+            var response = new
+            {
+                type = 1,
+                data = ticketLocations.Select(x => _mapper.Map<TicketLocationDto>(x))
+            };
+            return  Ok(response);
         }
 
         // GET: api/TicketLocations/5

@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 
 namespace FestivalHue.Controllers
 {
@@ -14,54 +18,73 @@ namespace FestivalHue.Controllers
     public class AboutsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
-
-        public AboutsController(FestivalHueContext context)
+        private readonly IMapper _mapper;
+        public AboutsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Abouts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<About>>> GetAbouts()
+        public async Task<ActionResult<IEnumerable<AboutDto>>> GetAbouts()
         {
           if (_context.Abouts == null)
           {
               return NotFound();
           }
-            return await _context.Abouts.ToListAsync();
+          var about = await _context.Abouts.ToListAsync();
+            var response = new
+            {
+                type = 1,
+                list = about.Select(x => new
+                {
+                    AboutId = x.AboutId,
+                    Title = x.Title,
+                })
+            };
+            return Ok(response);
         }
 
         // GET: api/Abouts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<About>> GetAbout(int id)
+        public async Task<ActionResult<AboutDto>> GetAbout(int id)
         {
           if (_context.Abouts == null)
           {
               return NotFound();
           }
             var about = await _context.Abouts.FindAsync(id);
-
+            var aboutDto = _mapper.Map<AboutDto>(about);
             if (about == null)
             {
                 return NotFound();
             }
-
-            return about;
+            var response = new
+            {
+                type = 1,
+                detail = new { 
+                    AboutId = aboutDto.AboutId,
+                    Title = aboutDto.Title,
+                    Content = aboutDto.Content,
+                }
+            };
+            return Ok(response);
         }
 
         // PUT: api/Abouts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAbout(int id, About about)
+        public async Task<IActionResult> PutAbout(int id, AboutDto about)
         {
-            if (id != about.AboutId)
+            var aboutEntity = _mapper.Map<About>(about);
+            if (id != aboutEntity.AboutId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(about).State = EntityState.Modified;
-
+         
             try
             {
+                _context.Entry(aboutEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,13 +104,14 @@ namespace FestivalHue.Controllers
 
         // POST: api/Abouts
         [HttpPost]
-        public async Task<ActionResult<About>> PostAbout(About about)
+        public async Task<ActionResult<About>> PostAbout(AboutDto about)
         {
           if (_context.Abouts == null)
           {
               return Problem("Entity set 'FestivalHueContext.Abouts'  is null.");
           }
-            _context.Abouts.Add(about);
+            var aboutEntity = _mapper.Map<About>(about);
+            _context.Abouts.Add(aboutEntity);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAbout", new { id = about.AboutId }, about);

@@ -45,6 +45,7 @@ namespace FestivalHue.Controllers
           }
           // get role by id 
             var role = await _context.Roles.FindAsync(id);
+
             if (role == null)
             {
                 return NotFound("Role not found.");

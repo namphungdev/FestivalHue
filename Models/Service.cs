@@ -14,8 +14,8 @@ namespace FestivalHue.Models
         public int SubMenuId { get; set; }
         public virtual ICollection<SubMenu> SubMenus { get; set; }
         public string Summary { get; set; }
-        public int Longtitude { get; set; }
-        public int Latitude { get; set; }
+        public string Longtitude { get; set; }
+        public string Latitude { get; set; }
         public string Content { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<FavouriteService> FavouriteServices { get; set; }

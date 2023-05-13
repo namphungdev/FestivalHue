@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
@@ -14,26 +17,28 @@ namespace FestivalHue.Controllers
     public class SubMenusController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public SubMenusController(FestivalHueContext context)
+        public SubMenusController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/SubMenus
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SubMenu>>> GetSubMenus()
+        public async Task<ActionResult<IEnumerable<SubMenuDto>>> GetSubMenus()
         {
           if (_context.SubMenus == null)
           {
               return NotFound();
           }
-            return await _context.SubMenus.ToListAsync();
+            return await _context.SubMenus.Select(x => _mapper.Map<SubMenuDto>(x)).ToListAsync();
         }
 
         // GET: api/SubMenus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SubMenu>> GetSubMenu(int id)
+        public async Task<ActionResult<SubMenuDto>> GetSubMenu(int id)
         {
           if (_context.SubMenus == null)
           {
@@ -46,22 +51,22 @@ namespace FestivalHue.Controllers
                 return NotFound();
             }
 
-            return subMenu;
+            return _mapper.Map<SubMenuDto>(subMenu);
         }
 
         // PUT: api/SubMenus/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSubMenu(int id, SubMenu subMenu)
+        public async Task<IActionResult> PutSubMenu(int id, SubMenuDto subMenu)
         {
-            if (id != subMenu.SubMenuId)
+            var subMenuEntity = _mapper.Map<SubMenu>(subMenu);
+            if (id != subMenuEntity.SubMenuId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(subMenu).State = EntityState.Modified;
-
+        
             try
             {
+                _context.Entry(subMenuEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,13 +86,15 @@ namespace FestivalHue.Controllers
 
         // POST: api/SubMenus
         [HttpPost]
-        public async Task<ActionResult<SubMenu>> PostSubMenu(SubMenu subMenu)
+        public async Task<ActionResult<SubMenu>> PostSubMenu(SubMenuDto subMenu)
         {
           if (_context.SubMenus == null)
           {
               return Problem("Entity set 'FestivalHueContext.SubMenus'  is null.");
           }
-            _context.SubMenus.Add(subMenu);
+            var subMenuEntity = _mapper.Map<SubMenu>(subMenu);
+            _context.SubMenus.Add(subMenuEntity);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSubMenu", new { id = subMenu.SubMenuId }, subMenu);

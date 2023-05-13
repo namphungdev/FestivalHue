@@ -6,6 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
+using Microsoft.VisualStudio.Web.CodeGeneration.Design;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 namespace FestivalHue.Controllers
 {
@@ -14,54 +21,79 @@ namespace FestivalHue.Controllers
     public class ProgrammsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public ProgrammsController(FestivalHueContext context)
+        public ProgrammsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Programms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Programm>>> GetProgramms()
+        public async Task<ActionResult<IEnumerable<ProgrammDto>>> GetProgramms()
         {
           if (_context.Programms == null)
           {
               return NotFound();
           }
-            return await _context.Programms.ToListAsync();
+            return await _context.Programms.Select(x => _mapper.Map<ProgrammDto>(x)).ToListAsync();
         }
 
         // GET: api/Programms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Programm>> GetProgramm(int id)
+        public async Task<ActionResult<ProgrammDto>> GetProgramm(int id)
         {
           if (_context.Programms == null)
           {
               return NotFound();
           }
             var programm = await _context.Programms.FindAsync(id);
-
+            var programmDto = _mapper.Map<ProgrammDto>(programm);
             if (programm == null)
             {
                 return NotFound();
             }
+            var response = new
+            {
+                programmId = programmDto.ProgramId,
+                programmName = programmDto.ProgramName,
+                programmContent = programmDto.ProgramContent,
+                type_inoff = programmDto.Type_inoff,
+                price = programmDto.Price,
+                type_program = programmDto.Type_program,
+                arrange = programmDto.arrange,
+                detail_list = new {
+                    fdate = programmDto.Fdate,
+                    tdate = programmDto.Tdate,
+                    locationId = programmDto.LocationId,
+                    locationName = _context.Locations.Find(programmDto.LocationId).LocationName,
+                    groupId = programmDto.GroupId,
+                    groupName = _context.Groups.Find(programmDto.GroupId).GroupName,
+                },
+                md5 = programmDto.Md5,
+                pathImage_list = new {
+                    programmDto.PathImage,
+                }
 
-            return programm;
+            };
+
+            return Ok(response);
         }
 
         // PUT: api/Programms/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProgramm(int id, Programm programm)
+        public async Task<IActionResult> PutProgramm(int id, ProgrammDto programm)
         {
-            if (id != programm.ProgramId)
+            var programmEntity = _mapper.Map<Programm>(programm);
+            if (id != programmEntity.ProgramId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(programm).State = EntityState.Modified;
-
+          
             try
             {
+                _context.Entry(programmEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,13 +113,14 @@ namespace FestivalHue.Controllers
 
         // POST: api/Programms
         [HttpPost]
-        public async Task<ActionResult<Programm>> PostProgramm(Programm programm)
+        public async Task<ActionResult<Programm>> PostProgramm(ProgrammDto programm)
         {
           if (_context.Programms == null)
           {
               return Problem("Entity set 'FestivalHueContext.Programms'  is null.");
           }
-            _context.Programms.Add(programm);
+            var programmEntity = _mapper.Map<Programm>(programm);
+            _context.Programms.Add(programmEntity);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProgramm", new { id = programm.ProgramId }, programm);
