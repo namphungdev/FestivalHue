@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
@@ -14,54 +17,79 @@ namespace FestivalHue.Controllers
     public class NewsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public NewsController(FestivalHueContext context)
+        public NewsController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/News
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<News>>> GetNewss()
+        [HttpGet("idPage")]
+        public async Task<ActionResult<IEnumerable<NewsDto>>> GetNewss(int page = 1, int pageSize = 10)
         {
-          if (_context.Newss == null)
-          {
-              return NotFound();
-          }
-            return await _context.Newss.ToListAsync();
-        }
-
-        // GET: api/News/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<News>> GetNews(int id)
-        {
-          if (_context.Newss == null)
-          {
-              return NotFound();
-          }
-            var news = await _context.Newss.FindAsync(id);
-
+            var news = _context.Newss
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
             if (news == null)
             {
                 return NotFound();
             }
+           
+            var reposne = new
+            {
+                type = 1,
+                list = news.Select(x => new
+                {
+                    newsId = x.NewsId,
+                    title = x.Title,
+                    parthimage = x.Image,
+                    summary = x.Summary,
+                    createdDate = x.Created_at,
+                    updatedDate = x.Updated_at,
+                })
+            };
+            return Ok(reposne);
+        }
 
-            return news;
+        // GET: api/News/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<NewsDto>> GetNews(int id)
+        {
+            if (_context.Newss == null)
+            {
+                return NotFound();
+            }
+            var news = await _context.Newss.FindAsync(id);
+            var newsdto = _mapper.Map<NewsDto>(news);
+            if (news == null)
+            {
+                return NotFound();
+            }
+            var respone = new
+            {
+                type = 1,
+                detail = newsdto
+            };
+
+            return Ok(respone);
         }
 
         // PUT: api/News/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNews(int id, News news)
+        public async Task<IActionResult> PutNews(int id, NewsDto news)
         {
-            if (id != news.NewsId)
+            var newsEntity = _mapper.Map<News>(news);
+            if (id != newsEntity.NewsId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(news).State = EntityState.Modified;
-
             try
             {
+                _context.Entry(newsEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -81,13 +109,14 @@ namespace FestivalHue.Controllers
 
         // POST: api/News
         [HttpPost]
-        public async Task<ActionResult<News>> PostNews(News news)
+        public async Task<ActionResult<News>> PostNews(NewsDto news)
         {
-          if (_context.Newss == null)
-          {
-              return Problem("Entity set 'FestivalHueContext.Newss'  is null.");
-          }
-            _context.Newss.Add(news);
+            if (_context.Newss == null)
+            {
+                return Problem("Entity set 'FestivalHueContext.Newss'  is null.");
+            }
+            var newsEntity = _mapper.Map<News>(news);
+            _context.Newss.Add(newsEntity);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetNews", new { id = news.NewsId }, news);

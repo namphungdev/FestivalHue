@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.Web.CodeGeneration.Design;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using NuGet.Packaging;
 
 namespace FestivalHue.Controllers
 {
@@ -40,6 +41,106 @@ namespace FestivalHue.Controllers
             return await _context.Programms.Select(x => _mapper.Map<ProgrammDto>(x)).ToListAsync();
         }
 
+        [HttpGet("GetAllProgramByDate")]
+        public async Task<ActionResult<ProgrammDto>> GetAllProgrammByDate()
+        {
+            if (_context.Programms == null)
+            {
+                return NotFound();
+            }
+            var programm = await _context.Programms.Select(x => _mapper.Map<ProgrammDto>(x)).ToListAsync();
+            var programmDto = programm.GroupBy(x => x.Fdate).Select(x => x.ToList()).ToList();
+            if (programmDto.Count == 0)
+            {
+                return NotFound("Không có chương trình");
+            }
+
+            var allprogrambydate = programmDto.Select(x => new
+            {
+                fdate = x[0].Fdate,
+                count = x.Count(),
+            });
+            
+
+            return Ok(allprogrambydate);
+        }
+
+        [HttpGet("GetProgramByDate/{tdate}")]
+        public async Task<ActionResult<ProgrammDto>> GetProgrammByTypeProgram(DateTime tdate)
+        {
+            if (_context.Programms == null)
+            {
+                return NotFound();
+            }
+            var programm = await _context.Programms.Select(x => _mapper.Map<ProgrammDto>(x)).ToListAsync(); ;
+            var programmDto = programm.FindAll(x => x.Tdate == tdate);
+            if (programmDto.Count == 0)
+            {
+                return NotFound("Không có chương trình");
+            }
+            var response = new
+            {
+                tdate = tdate,
+                type = 0,
+                detail_list = programmDto.Select(x => new {
+                    tdate = x.Tdate,
+                    programmId = x.ProgramId,
+                    programmName = x.ProgramName,                  
+                    type_inoff = x.Type_inoff,                 
+                    locationId = x.LocationId,
+                    LocationName = _context.Locations.Find(x.LocationId).LocationName,
+                    fdate = x.Fdate,
+                })
+            };
+
+            return Ok(response);
+        }
+
+        // GET: api/Programms/5
+        [HttpGet("GetProgramByTypeProgram/{TypeProgram}")]
+        public async Task<ActionResult<ProgrammDto>> GetProgrammByTypeProgram(int TypeProgram)
+        {
+            if (_context.Programms == null)
+            {
+                return NotFound();
+            }
+            var programm = await _context.Programms.Select(x => _mapper.Map<ProgrammDto>(x)).ToListAsync(); ;
+            var programmDto = programm.FindAll(x => x.Type_program == TypeProgram);
+            if (programmDto.Count == 0)
+            {
+                return NotFound("Không có chương trình");
+            }
+            var response = new
+            {
+                TypeProgram = TypeProgram,
+                list = programmDto.Select(x => new {
+                    programmId = x.ProgramId,
+                    programmName = x.ProgramName,
+                    programmContent = x.ProgramContent,
+                    type_inoff = x.Type_inoff,
+                    price = x.Price,
+                    type_program = x.Type_program,
+                    arrange = x.arrange,
+                    detail_list = new
+                    {
+                        fdate = x.Fdate,
+                        tdate = x.Tdate,
+                        locationId = x.LocationId,
+                        locationName = _context.Locations.Find(x.LocationId).LocationName,
+                        groupId = x.GroupId,
+                        groupName = _context.Groups.Find(x.GroupId).GroupName,
+                    },
+                    md5 = x.Md5,
+                    pathImage_list = new
+                    {
+                        x.PathImage,
+                    }
+                })              
+            };
+
+            return Ok(response);
+        }
+
         // GET: api/Programms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProgrammDto>> GetProgramm(int id)
@@ -50,9 +151,9 @@ namespace FestivalHue.Controllers
           }
             var programm = await _context.Programms.FindAsync(id);
             var programmDto = _mapper.Map<ProgrammDto>(programm);
-            if (programm == null)
+            if (programmDto == null)
             {
-                return NotFound();
+                return NotFound("Không có chương trình");
             }
             var response = new
             {

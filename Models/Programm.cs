@@ -29,6 +29,8 @@ namespace FestivalHue.Models
 
         public int Type_program { get; set; }
 
+        public virtual ProgramType ProgramType { get; set; }
+
         public int arrange { get; set; }
 
         public DateTime Fdate { get; set; } = DateTime.Now;

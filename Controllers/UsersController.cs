@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
@@ -14,26 +17,28 @@ namespace FestivalHue.Controllers
     public class UsersController : ControllerBase
     {
         private readonly FestivalHueContext _context;
+        private readonly IMapper _mapper;
 
-        public UsersController(FestivalHueContext context)
+        public UsersController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
           if (_context.Users == null)
           {
               return NotFound();
           }
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Select(x => _mapper.Map<UserDto>(x)).ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(int id)
         {
           if (_context.Users == null)
           {
@@ -46,22 +51,22 @@ namespace FestivalHue.Controllers
                 return NotFound();
             }
 
-            return user;
+            return _mapper.Map<UserDto>(user); ;
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserDto user)
         {
-            if (id != user.UserId)
+            var userEntity = _mapper.Map<User>(user);
+            if (id != userEntity.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-
             try
             {
+                _context.Entry(userEntity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -76,18 +81,20 @@ namespace FestivalHue.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok("Chỉnh sửa thành công");
         }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(UserDto user)
         {
           if (_context.Users == null)
           {
               return Problem("Entity set 'FestivalHueContext.Users'  is null.");
           }
-            _context.Users.Add(user);
+            var userEntity = _mapper.Map<User>(user);
+            _context.Users.Add(userEntity);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
@@ -110,7 +117,7 @@ namespace FestivalHue.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Xóa thành công");
         }
 
         private bool UserExists(int id)

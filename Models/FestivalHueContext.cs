@@ -23,6 +23,8 @@ namespace FestivalHue.Models
         public DbSet<Menu> Menus { get; set; }
         public DbSet<News> Newss { get; set; }
         public DbSet<Programm> Programms { get; set; }
+        public DbSet<ProgramType> ProgramTypes { get; set; }
+
         public DbSet<Service> Services { get; set; }
         public DbSet<SubMenu> SubMenus { get; set; }
         public DbSet<TicketLocation> TicketLocations { get; set; }
@@ -187,8 +189,26 @@ namespace FestivalHue.Models
                 .WithOne(a => a.Admin)
                 .HasForeignKey(a => a.AdminId)
                 .OnDelete(DeleteBehavior.Restrict);
-          
-        }
-        public DbSet<FestivalHue.Dto.GroupDto>? GroupDto { get; set; }
+            modelBuilder.Entity<Programm>()
+               .HasOne(a => a.ProgramType) 
+               .WithMany(r => r.Programms)
+               .HasForeignKey(a => a.Type_program)
+               .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ProgramType>()
+                .HasMany(r => r.Programms)
+                .WithOne(a => a.ProgramType)
+                .HasForeignKey(a => a.Type_program)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Admin>()
+               .HasOne(a => a.Role)
+               .WithMany(r => r.Admins)
+               .HasForeignKey(a => a.RoleId)
+               .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.Admins)
+                .WithOne(a => a.Role)
+                .HasForeignKey(a => a.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }    
     }
 }
