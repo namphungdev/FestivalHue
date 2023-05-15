@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "yh93RgOCLPLA9ktHfw7awGvQZRifWMDwNJvV49xOv6eZiZIdHfIPXUUvySGHU9AMD9Pp2jDixpkFX7tofgsOZQ==",
+  "dgSpecHash": "dJckmFUXZx26jKeLcW2XvFUJQwZXSsS+6nwgCAuBNVK1Sq3mNIi/12X8p2W2iS0A5q+DH2DzCDUYPsB1CGlbOw==",
   "success": true,
   "projectFilePath": "A:\\CODE\\alta sofware\\FestivalHue\\FestivalHue\\FestivalHue\\FestivalHue.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\namth\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\namth\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
