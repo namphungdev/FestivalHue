@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
 using AutoMapper;
 using FestivalHue.Dto;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
     public class RolesController : ControllerBase
     {
         private readonly FestivalHueContext _context;

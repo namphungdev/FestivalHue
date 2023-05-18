@@ -290,3 +290,4 @@ A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtim
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\AutoMapper.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\BCrypt.Net-Core.dll
+A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

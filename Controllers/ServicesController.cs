@@ -10,6 +10,7 @@ using AutoMapper;
 using FestivalHue.Dto;
 using System.Data;
 using NuGet.Packaging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FestivalHue.Controllers
 {
