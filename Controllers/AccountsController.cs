@@ -37,7 +37,7 @@ namespace FestivalHue.Controllers
         {
             try
             {
-                //code to create user and hash password with md5
+                //code to create user and hash password with bcrypt
                 var check = _context.Users.Where(x => x.Email == user.Email).FirstOrDefault();
                 if (check != null)
                 {

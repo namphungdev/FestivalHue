@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using FestivalHue.Dto;
 using FestivalHue.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
@@ -10,6 +12,7 @@ namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
     public class MenusController : ControllerBase
     {
         private readonly FestivalHueContext _context;

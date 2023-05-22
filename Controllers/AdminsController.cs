@@ -9,11 +9,15 @@ using FestivalHue.Models;
 using AutoMapper;
 using FestivalHue.Dto;
 using NuGet.Protocol;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
     public class AdminsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
@@ -76,14 +80,15 @@ namespace FestivalHue.Controllers
 
         // PUT: api/Admins/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdmin(int id, Admin admin)
+        public async Task<IActionResult> PutAdmin(int id, AdminDto admin)
         {
-            if (id != admin.AdminId)
+            var adminUpdate = _mapper.Map<Admin>(admin);
+            if (id != adminUpdate.AdminId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(admin).State = EntityState.Modified;
+            _context.Entry(adminUpdate).State = EntityState.Modified;
 
             try
             {

@@ -17,7 +17,7 @@ namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "2")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
     public class AboutsController : ControllerBase
     {
         private readonly FestivalHueContext _context;

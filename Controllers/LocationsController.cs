@@ -9,11 +9,14 @@ using FestivalHue.Models;
 using AutoMapper;
 using FestivalHue.Dto;
 using System.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
     public class LocationsController : ControllerBase
     {
         private readonly FestivalHueContext _context;

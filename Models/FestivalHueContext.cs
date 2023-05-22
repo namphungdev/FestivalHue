@@ -210,5 +210,6 @@ namespace FestivalHue.Models
                 .HasForeignKey(a => a.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
         }    
+        public DbSet<FestivalHue.Dto.FavouriteProgramDto>? FavouriteProgramDto { get; set; }
     }
 }
