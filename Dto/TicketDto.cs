@@ -13,7 +13,8 @@ namespace FestivalHue.Dto
         public int Quantity { get; set; }
         public int Status { get; set; }
         public int TicketTypeId { get; set; }
+        public int ProgramId { get; set; }
         public int UserId { get; set; }
-
+        public DateTime Fdate { get; set; } = DateTime.Now;
     }
 }

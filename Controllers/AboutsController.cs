@@ -17,7 +17,7 @@ namespace FestivalHue.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+    /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]*/
     public class AboutsController : ControllerBase
     {
         private readonly FestivalHueContext _context;
@@ -28,6 +28,11 @@ namespace FestivalHue.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("/qr-code")]
+        public IActionResult QRCode()
+        {
+            return File("testqrcode.html", "text/html");
+        }
         // GET: api/Abouts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AboutDto>>> GetAbouts()

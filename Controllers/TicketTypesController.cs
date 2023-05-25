@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FestivalHue.Models;
+using AutoMapper;
+using FestivalHue.Dto;
 
 namespace FestivalHue.Controllers
 {
@@ -13,22 +15,24 @@ namespace FestivalHue.Controllers
     [ApiController]
     public class TicketTypesController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly FestivalHueContext _context;
 
-        public TicketTypesController(FestivalHueContext context)
+        public TicketTypesController(FestivalHueContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/TicketTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketType>>> GetTicketTypes()
+        public async Task<ActionResult<IEnumerable<TicketTypeDto>>> GetTicketTypes()
         {
           if (_context.TicketTypes == null)
           {
               return NotFound();
           }
-            return await _context.TicketTypes.ToListAsync();
+            return await _context.TicketTypes.Select(x => _mapper.Map<TicketTypeDto>(x)).ToListAsync();
         }
 
         // GET: api/TicketTypes/5
@@ -81,13 +85,14 @@ namespace FestivalHue.Controllers
 
         // POST: api/TicketTypes
         [HttpPost]
-        public async Task<ActionResult<TicketType>> PostTicketType(TicketType ticketType)
+        public async Task<ActionResult<TicketType>> PostTicketType(TicketTypeDto ticketType)
         {
           if (_context.TicketTypes == null)
           {
               return Problem("Entity set 'FestivalHueContext.TicketTypes'  is null.");
           }
-            _context.TicketTypes.Add(ticketType);
+            var TicketTypeEntity = _mapper.Map<TicketType>(ticketType);
+            _context.TicketTypes.Add(TicketTypeEntity);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTicketType", new { id = ticketType.TicketTypeId }, ticketType);

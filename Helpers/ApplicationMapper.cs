@@ -23,6 +23,7 @@ namespace FestivalHue.Helpers
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<ProgramType, ProgramTypeDto>().ReverseMap();
             CreateMap<FavouriteProgram, FavouriteProgramDto>().ReverseMap();
+            CreateMap<TicketType, TicketTypeDto>().ReverseMap();
         }
     }
 }

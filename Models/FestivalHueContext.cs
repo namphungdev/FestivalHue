@@ -106,6 +106,17 @@ namespace FestivalHue.Models
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Ticket>()
+          .HasOne(p => p.Programm)
+          .WithMany(a => a.Tickets)
+          .HasForeignKey(p => p.ProgramId)
+          .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Programm>()
+               .HasMany(r => r.Tickets)
+               .WithOne(a => a.Programm)
+               .HasForeignKey(a => a.ProgramId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ticket>()
                 .HasOne(p => p.User)
                 .WithMany(a => a.Tickets)
                 .HasForeignKey(p => p.UserId)
@@ -115,7 +126,7 @@ namespace FestivalHue.Models
                 .WithOne(a => a.User)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-     
+
             modelBuilder.Entity<FavouriteProgram>()
                  .HasOne(p => p.User)
                  .WithMany(a => a.FavouritePrograms)
@@ -190,7 +201,7 @@ namespace FestivalHue.Models
                 .HasForeignKey(a => a.AdminId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Programm>()
-               .HasOne(a => a.ProgramType) 
+               .HasOne(a => a.ProgramType)
                .WithMany(r => r.Programms)
                .HasForeignKey(a => a.Type_program)
                .OnDelete(DeleteBehavior.Cascade);
@@ -209,7 +220,7 @@ namespace FestivalHue.Models
                 .WithOne(a => a.Role)
                 .HasForeignKey(a => a.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
-        }    
+        }
         public DbSet<FestivalHue.Dto.FavouriteProgramDto>? FavouriteProgramDto { get; set; }
     }
 }

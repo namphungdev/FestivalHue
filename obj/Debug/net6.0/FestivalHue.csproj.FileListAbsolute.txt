@@ -283,7 +283,6 @@ A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\tr\Mic
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
@@ -291,3 +290,5 @@ A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\AutoMa
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\BCrypt.Net-Core.dll
 A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\zxing.dll
+A:\CODE\alta sofware\FestivalHue\FestivalHue\FestivalHue\bin\Debug\net6.0\ZXing.Windows.Compatibility.dll

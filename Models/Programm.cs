@@ -44,9 +44,6 @@ namespace FestivalHue.Models
         /* public virtual ICollection<User> Users { get; set; }*/
         public ICollection<FavouriteProgram> FavouritePrograms { get; set; }
         public ICollection<Notification> Notifications { get; set; }
-
-
-
-
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

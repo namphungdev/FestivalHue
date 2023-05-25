@@ -17,9 +17,15 @@ namespace FestivalHue.Models
         public int TicketTypeId { get; set; }
         public virtual TicketType TicketType { get; set; }
 
+        public int ProgramId { get; set; }
+
+        public virtual Programm Programm { get; set; }
+
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        public DateTime Fdate { get; set; } = DateTime.Now;
 
         public virtual ICollection<Checkin> Checkins { get; set; }
 

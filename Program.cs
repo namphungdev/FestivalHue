@@ -16,7 +16,6 @@ builder.Services.AddControllers().AddJsonOptions(option => {
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-/*builder.Services.AddSwaggerGen();*/
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 /*builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());*/
@@ -26,7 +25,7 @@ builder.Services.AddDbContext<FestivalHueContext>(options => {
 });
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API Title", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API FestivalHue", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -78,7 +77,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 app.UseAuthentication();
+
 app.MapControllers();
 
 app.Run();

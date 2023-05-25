@@ -29,86 +29,70 @@ namespace FestivalHue.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FavouriteProgramDto>>> GetFavouritePrograms()
         {
-          if (_context.FavouritePrograms == null)
-          {
-              return NotFound();
-          }
-          var favouritePrograms =  _context.FavouritePrograms.Select(x => _mapper.Map<FavouriteProgramDto>(x)).ToList();
-            /*var groupby = favouritePrograms.GroupBy(x => x.UserId).Select(g => new FavouriteProgram { 
+            if (_context.FavouritePrograms == null)
+            {
+                return NotFound();
+            }
+            var favouriteProgramm = await _context.FavouritePrograms.Select(x => _mapper.Map<FavouriteProgramDto>(x)).ToListAsync();
+            var favouriteProgrammDto = favouriteProgramm.GroupBy(x => x.UserId).Select(g => new FavouriteProgramDto
+            {
                 UserId = g.Key,
-                
-            });*/
-            
-            var respone = favouritePrograms.Select(x => new
+
+            });
+            if (favouriteProgramm.Count == 0)
+            {
+                return NotFound("Không có chương trình yêu thích");
+            }
+            var response = favouriteProgrammDto.Select(x => new
             {
                 UserId = x.UserId,
-                listFavorite = favouritePrograms.Select(y => new
+                FavouriteProgramm = favouriteProgramm.Where(y => y.UserId == x.UserId).Select(y => new
                 {
-                     ProgramId = y.ProgramId,
-                     ProgramName = _context.Programms.Find(y.ProgramId).ProgramName            
+                    ProgramId = y.ProgramId,
+                    ProgramName = _context.Programms.Find(y.ProgramId).ProgramName
                 })
+
             });
-            return Ok(respone);
+            return Ok(response);
         }
 
         // GET: api/FavouritePrograms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FavouriteProgram>> GetFavouriteProgram(int id)
         {
-          if (_context.FavouritePrograms == null)
-          {
-              return NotFound();
-          }
-            var favouriteProgram = await _context.FavouritePrograms.FindAsync(id);
-
-            if (favouriteProgram == null)
+            if (_context.FavouritePrograms == null)
             {
                 return NotFound();
             }
-
-            return favouriteProgram;
-        }
-
-        // PUT: api/FavouritePrograms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFavouriteProgram(int id, FavouriteProgram favouriteProgram)
-        {
-            if (id != favouriteProgram.UserId)
+            var favouriteProgramm = await _context.FavouritePrograms.Select(x => _mapper.Map<FavouriteProgramDto>(x)).ToListAsync();
+            var check = favouriteProgramm.Find(x => x.UserId == id);
+            if (check == null)
             {
-                return BadRequest();
+                return NotFound("Chưa yêu thích chương trình nào");
             }
-
-            _context.Entry(favouriteProgram).State = EntityState.Modified;
-
-            try
+            var response = new
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FavouriteProgramExists(id))
+                UserId = id,
+                FavouriteProgramm = favouriteProgramm.Where(y => y.UserId == id).Select(y => new
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    ProgramId = y.ProgramId,
+                    ProgramName = _context.Programms.Find(y.ProgramId).ProgramName
+                })
 
-            return NoContent();
+            };
+
+            return Ok(response);
         }
-
+        
         // POST: api/FavouritePrograms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<FavouriteProgram>> PostFavouriteProgram(FavouriteProgramDto favouriteProgram)
         {
-          if (_context.FavouritePrograms == null)
-          {
-              return Problem("Entity set 'FestivalHueContext.FavouritePrograms'  is null.");
-          }
+            if (_context.FavouritePrograms == null)
+            {
+                return Problem("Entity set 'FestivalHueContext.FavouritePrograms'  is null.");
+            }
             var favouriteProgramEntity = _mapper.Map<FavouriteProgram>(favouriteProgram);
             _context.FavouritePrograms.Add(favouriteProgramEntity);
             try
