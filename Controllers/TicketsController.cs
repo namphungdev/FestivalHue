@@ -59,6 +59,10 @@ namespace FestivalHue.Controllers
             string imagePath = "Img/QRTicket/qrticket" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".png" ;
             qrCodeBitmap.Save(imagePath, ImageFormat.Png);
 
+            var ticketEntity = _mapper.Map<Ticket>(ticket);
+            _context.Tickets.Add(ticketEntity);
+            await _context.SaveChangesAsync();
+
             return File(qrCodeBytes, "image/png");
         }
 

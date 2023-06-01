@@ -10999,32 +10999,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\namth\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages": {}
+    "C:\\Users\\namth\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "A:\\CODE\\alta sofware\\FestivalHue\\FestivalHue\\FestivalHue\\FestivalHue.csproj",
+      "projectUniqueName": "D:\\CODE\\alta sofware\\project2\\FestivalHue\\FestivalHue.csproj",
       "projectName": "FestivalHue",
-      "projectPath": "A:\\CODE\\alta sofware\\FestivalHue\\FestivalHue\\FestivalHue\\FestivalHue.csproj",
+      "projectPath": "D:\\CODE\\alta sofware\\project2\\FestivalHue\\FestivalHue.csproj",
       "packagesPath": "C:\\Users\\namth\\.nuget\\packages\\",
-      "outputPath": "A:\\CODE\\alta sofware\\FestivalHue\\FestivalHue\\FestivalHue\\obj\\",
+      "outputPath": "D:\\CODE\\alta sofware\\project2\\FestivalHue\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages"
-      ],
       "configFilePaths": [
         "C:\\Users\\namth\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.1.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11115,7 +11110,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

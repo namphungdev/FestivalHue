@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CWI2t3bB5RTezLuiCC7qjd1ia8DRKBEK4BhaqkzTkBswqx3KB0gqxF+faHzrFYaY8g0DgsM6Mr6P2ZHdD8J9Ww==",
+  "dgSpecHash": "9XFB4A3szKtl0BlZhaCTugufhIE9fhjDA1nz56Q8EfAH9QEgQcuAAeUYc/VSso/NFT8sDOQK5v7bG+9i6Km2NQ==",
   "success": true,
-  "projectFilePath": "A:\\CODE\\alta sofware\\FestivalHue\\FestivalHue\\FestivalHue\\FestivalHue.csproj",
+  "projectFilePath": "D:\\CODE\\alta sofware\\project2\\FestivalHue\\FestivalHue.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\namth\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\namth\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
